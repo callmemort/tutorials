@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace LINQDemoClean
 {
@@ -15,25 +16,24 @@ namespace LINQDemoClean
             //Things you can do with LINQ
 
             //Where - filter a collection
-            List<Pony> demo = new List<Pony>();
-            foreach(Pony pony in allPonies)
+
+            var poniesFiltered = allPonies.Where(p => p.HairColor == "purple");
+
+            Console.WriteLine("List of filtered ponies");
+            foreach (Pony p in poniesFiltered)
             {
-                if(pony.HairColor == "purple")
-                {
-                    demo.Add(pony);
-                }
+                Console.WriteLine(p.Name);
             }
-            var purpleHairedPonies = allPonies.Where(p => p.HairColor == "purple");
-            Console.WriteLine("Here are all the ponies with purple hair: ");
-            foreach (Pony aPony in purpleHairedPonies)
-            {
-                Console.WriteLine(aPony.Name);
-            }
+
+            List<Pony> poniesMarkedUp = allPonies.Where(p => p.CutieMark.Quantity > 9).ToList();
+
+
+
             Console.WriteLine();
-            List<Pony> moreThan10ItemPonies = allPonies.Where(p => p.CutieMark.Quantity > 10).ToList();
+      
             Console.WriteLine("Here are all the ponies with more than 10 items in their cutie marks: ");
 
-            foreach (Pony aPony in moreThan10ItemPonies)
+            foreach (Pony aPony in poniesMarkedUp)
             {
                 Console.WriteLine(aPony.Name);
             }
@@ -57,13 +57,17 @@ namespace LINQDemoClean
 
             // - Any() - returns a boolean value that tells you if any objects in your collection meet a condition.
             // similar to what you might think of as .contains() but can take an entire function or drill down into an object to find nested properties and things like that
-
+            bool anyPoniesHaveMarkQtyOver5 = allPonies.Any(p => p.CutieMark.Quantity > 5);
 
             // All() - also returns a boolean answering whether all the things meet a specific condition
+
 
             // SelectMany() - How to flatten a collection. This is used when you have one collection of objects, and the objects contain another 
             //collection inside. We are probably not going to get to this today but I wanted to leave it here so you've heard of it.
 
+            var allPoniesDictionary = allPonies.ToDictionary(p => p.Name);
+
+            Console.WriteLine("write a line");
         }
     }
 }
